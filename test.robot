@@ -8,6 +8,7 @@ TC_TEST_00034 test hello
     log    BROWSER=${BROWSER}
 
 TC_TEST_00035 test google
+    [Tags]    web
     open browser    https://www.google.co.th    chrome
     #log    BROWSER=${BROWSER}
     #Maximize Browser Window
@@ -16,11 +17,13 @@ TC_TEST_00035 test google
     close browser
 
 TC_TEST_00036 test mock app
+    [Tags]    mockapp
     Create Session    mock_app    http://${MOCK_APP_SERVER}:8080
     ${resp}=    Get Request    mock_app    /
     Should be equal as integers    200    ${resp.status_code}
 
 TC_TEST_00037 test mock app connect backend
+    [Tags]    mockapp    backend
     Create Session    mock_app    http://${MOCK_APP_SERVER}:8080
     ${resp}=    Get Request    mock_app    /test?backend=${BACKEND_SERVER}
     Should be equal as integers    200    ${resp.status_code}
