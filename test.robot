@@ -9,7 +9,7 @@ TC_TEST_00034 test hello
 
 TC_TEST_00035 test google
     [Tags]    web
-    open browser    https://www.google.co.th    chrome
+    open browser    https://www.google.co.th    ${BROWSER}
     #log    BROWSER=${BROWSER}
     #Maximize Browser Window
     #set window size    1920    1080
