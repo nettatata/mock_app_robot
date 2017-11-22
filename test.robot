@@ -1,6 +1,8 @@
 *** settings ***
+Library    OperatingSystem
 Library    Selenium2Library
 Library    RequestsLibrary
+Suite Setup    Deploy mock data
 
 *** test cases ***
 TC_TEST_00034 test hello
@@ -9,6 +11,11 @@ TC_TEST_00034 test hello
 
 TC_TEST_00035 test google
     [Tags]    web
+    #${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+    #Call Method    ${chrome_options}    add_argument    test-type
+    #Call Method    ${chrome_options}    add_argument    --disable-extensions
+    #Call Method    ${chrome_options}    add_argument    -log-path=/tmp/chrome.log
+    #Create Webdriver    Chrome    my_alias    chrome_options=${chrome_options}
     open browser    https://www.google.co.th    ${BROWSER}
     #log    BROWSER=${BROWSER}
     #Maximize Browser Window
@@ -28,3 +35,11 @@ TC_TEST_00037 test mock app connect backend
     ${resp}=    Get Request    mock_app    /test?backend=${BACKEND_SERVER}
     Should be equal as integers    200    ${resp.status_code}
     Should be equal    result from backend    ${resp.text}
+
+
+*** keywords ***
+Deploy mock data
+    ${content}    Get File    mock_data/mock_data.json
+    Create Session    mb    http://${MB_SERVER}
+    Delete Request    mb    /imposters/9001
+    Post Request    mb    /imposters    data=${content}
