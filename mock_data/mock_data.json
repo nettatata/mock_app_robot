@@ -29,6 +29,27 @@
         {
           "equals": {
             "method": "GET",
+            "path": "/test2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/html"
+            },
+            "body": "result from backend 2"
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
             "path": "/xxx"
           }
         }

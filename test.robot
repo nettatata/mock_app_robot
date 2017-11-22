@@ -36,6 +36,12 @@ TC_TEST_00037 test mock app connect backend
     Should be equal as integers    200    ${resp.status_code}
     Should be equal    result from backend    ${resp.text}
 
+TC_TEST_00038 test mock app connect backend 2
+      [Tags]    mockapp    backend
+      Create Session    mock_app    http://${MOCK_APP_SERVER}
+      ${resp}=    Get Request    mock_app    /test2?backend=${BACKEND_SERVER}
+      Should be equal as integers    200    ${resp.status_code}
+      Should be equal    result from backend 2    ${resp.text}
 
 *** keywords ***
 Deploy mock data
