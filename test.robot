@@ -32,21 +32,21 @@ TC_TEST_00036 test mock app
 TC_TEST_00037 test mock app connect backend
     [Tags]    mockapp    backend
     Create Session    mock_app    http://${MOCK_APP_SERVER}
-    ${resp}=    Get Request    mock_app    /test?backend=${BACKEND_SERVER}
+    ${resp}=    Get Request    mock_app    /test?backend=${BACKEND_SERVER}&port=${PORT}
     Should be equal as integers    200    ${resp.status_code}
     Should be equal    result from backend    ${resp.text}
 
 TC_TEST_00038 test mock app connect backend 2
       [Tags]    mockapp    backend
       Create Session    mock_app    http://${MOCK_APP_SERVER}
-      ${resp}=    Get Request    mock_app    /test2?backend=${BACKEND_SERVER}
+      ${resp}=    Get Request    mock_app    /test2?backend=${BACKEND_SERVER}&port=${PORT}
       Should be equal as integers    200    ${resp.status_code}
       Should be equal    result from backend 2    ${resp.text}
 
 TC_TEST_00040 test mock app connect backend 3
       [Tags]    mockapp    backend
       Create Session    mock_app    http://${MOCK_APP_SERVER}
-      ${resp}=    Get Request    mock_app    /test3?backend=${BACKEND_SERVER}
+      ${resp}=    Get Request    mock_app    /test3?backend=${BACKEND_SERVER}&port=${PORT}
       Should be equal as integers    200    ${resp.status_code}
       Should be equal    result from backend 3    ${resp.text}
 
