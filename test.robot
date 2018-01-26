@@ -2,7 +2,7 @@
 Library    OperatingSystem
 Library    Selenium2Library
 Library    RequestsLibrary
-Suite Setup    Deploy mock data
+#Suite Setup    Deploy mock data
 
 *** test cases ***
 TC_TEST_00034 test hello
@@ -49,6 +49,11 @@ TC_TEST_00040 test mock app connect backend 3
       ${resp}=    Get Request    mock_app    /test3?backend=${BACKEND_SERVER}&port=${PORT}
       Should be equal as integers    200    ${resp.status_code}
       Should be equal    result from backend 3    ${resp.text}
+
+test oracle db
+      [Tags]    db
+      log    test connect to oracle db 
+
 
 *** keywords ***
 Deploy mock data
