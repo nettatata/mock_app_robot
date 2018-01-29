@@ -53,6 +53,10 @@ TC_TEST_00040 test mock app connect backend 3
 test oracle db
       [Tags]    db
       log    test connect to oracle db 
+     # ${x}=    evaluate    os.environ['ORACLE_HOME']    modules=os 
+     # ${x}=    evaluate    os.environ['LIBRARY_PATH']    modules=os 
+      evaluate    cx_Oracle.connect('QA_Weerawat','p@$$w0rd', cx_Oracle.makedsn('10.224.101.1', 2992, 'pstg'))    modules=cx_Oracle
+
 
 
 *** keywords ***
