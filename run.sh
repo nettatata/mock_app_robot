@@ -3,9 +3,10 @@
 #export DISPLAY=:99
 
 use_chrome_headless.sh
-robot -v BROWSER:chrome -i db -i web -i db test.robot
-pkill chromium
 
-#pkill Xvfb                  
+robot -i db -i web -i db test.robot
 
+pkill chrome
+pkill firefox
+pkill Xvfb                
 

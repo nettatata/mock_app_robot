@@ -9,17 +9,23 @@ TC_TEST_00034 test hello
     log    hello robot
     log    BROWSER=${BROWSER}
 
-TC_TEST_00035 test google
+TC_TEST_00035 test chrome
     [Tags]    web
     #${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     #Call Method    ${chrome_options}    add_argument    test-type
     #Call Method    ${chrome_options}    add_argument    --disable-extensions
     #Call Method    ${chrome_options}    add_argument    -log-path=/tmp/chrome.log
     #Create Webdriver    Chrome    my_alias    chrome_options=${chrome_options}
-    open browser    https://www.google.co.th    ${BROWSER}
+    open browser    https://www.google.co.th    chrome
     #log    BROWSER=${BROWSER}
     #Maximize Browser Window
     #set window size    1920    1080
+    capture page screenshot
+    close browser
+
+TC_TEST_00041 test firefox
+    [Tags]    web
+    open browser    https://www.google.co.th    ff
     capture page screenshot
     close browser
 
@@ -65,3 +71,4 @@ Deploy mock data
     Create Session    mb    http://${MB_SERVER}
     Delete Request    mb    /imposters/9001
     Post Request    mb    /imposters    data=${content}
+
