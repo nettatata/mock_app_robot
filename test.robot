@@ -9,15 +9,37 @@ TC_TEST_00034 test hello
     log    hello robot
     log    BROWSER=${BROWSER}
 
+
+test chrome
+    [Tags]    web    testchrome
+    Open Chrome    http://www.google.com
+    capture page screenshot
+    close browser
+
 TC_TEST_00035 test chrome
-    [Tags]    web
-    #${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+    [Tags]    web    chrome
     #Call Method    ${chrome_options}    add_argument    test-type
     #Call Method    ${chrome_options}    add_argument    --disable-extensions
     #Call Method    ${chrome_options}    add_argument    -log-path=/tmp/chrome.log
     #Create Webdriver    Chrome    my_alias    chrome_options=${chrome_options}
-    open browser    https://www.google.co.th    chrome
-    #log    BROWSER=${BROWSER}
+    #${disabled}    Create List    Chrome PDF Viewer
+    #${prefs}    Create Dictionary    download.default_directory=${download directory}    plugins.plugins_disabled=${disabled}
+    #Call Method    ${chrome options}    add_experimental_option    prefs    ${prefs}
+    #Call Method    ${chrome options}    add_argument    headless
+    #Call Method    ${chrome options}    add_argument    disable-gpu
+    
+    #${options.binary_location}    Set Variable    /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+    #${options}=     Call Method     ${chrome_options}    to_capabilities
+    #Create Webdriver    Chrome    chrome_options=${options}    executable_path=/usr/local/bin/chromedriver
+    
+
+    ${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    Call Method    ${chrome_options}    add_argument    headless
+    Call Method    ${chrome_options}    add_argument    disable-gpu
+    Create Webdriver    Chrome    chrome_options=${chrome_options}
+    Go To    http://www.google.com
+    #Open Browser    ${url}    Chrome    desired_capabilities=${chrome_options.to_capabilities()}
+
     #Maximize Browser Window
     #set window size    1920    1080
     capture page screenshot
@@ -25,7 +47,13 @@ TC_TEST_00035 test chrome
 
 TC_TEST_00041 test firefox
     [Tags]    web
-    open browser    https://www.google.co.th    ff
+    open browser    https://www.google.co.th    headlessfirefox
+    capture page screenshot
+    close browser
+
+TC_TEST_00042 test phantomjs
+    [Tags]    web
+    open browser    https://www.google.co.th    phantomjs
     capture page screenshot
     close browser
 
@@ -66,6 +94,15 @@ test oracle db
 
 
 *** keywords ***
+Open Chrome
+    [Arguments]    ${url}    
+    ${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    Call Method    ${chrome_options}    add_argument    headless
+    Call Method    ${chrome_options}    add_argument    disable-gpu
+    #Open Browser    ${url}    Chrome    desired_capabilities=${chrome_options.to_capabilities()}
+    Create Webdriver    Chrome    chrome_options=${chrome_options}
+    Go To    ${url}
+
 Deploy mock data
     ${content}    Get File    mock_data/mock_data.json
     Create Session    mb    http://${MB_SERVER}
