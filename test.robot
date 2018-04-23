@@ -16,7 +16,7 @@ test chrome
     capture page screenshot
     close browser
 
-TC_TEST_00035 test chrome
+TC_TEST_00035 test chrome headless by manual config
     [Tags]    web    chrome
     #Call Method    ${chrome_options}    add_argument    test-type
     #Call Method    ${chrome_options}    add_argument    --disable-extensions
@@ -42,8 +42,24 @@ TC_TEST_00035 test chrome
 
     #Maximize Browser Window
     #set window size    1920    1080
+    Click element    btnK    
     capture page screenshot
     close browser
+
+TC_TEST_00042 test chrome headless by predefined headlesschrome
+    [Tags]    web    chrome
+    Open Browser    http://www.google.com    headlesschrome
+    Click element    btnK
+    capture page screenshot
+    close browser
+
+TC_TEST_00042 test chrome normal mode 
+    [Tags]    web    chrome
+    Open Browser    http://www.google.com    chrome
+    Click element    btnK
+    capture page screenshot
+    close browser
+
 
 TC_TEST_00041 test firefox
     [Tags]    web
