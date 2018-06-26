@@ -17,7 +17,7 @@ test chrome
     close browser
 
 TC_TEST_00035 test chrome headless by manual config
-    [Tags]    web    chrome
+    [Tags]    web    chrome    0035
     #Call Method    ${chrome_options}    add_argument    test-type
     #Call Method    ${chrome_options}    add_argument    --disable-extensions
     #Call Method    ${chrome_options}    add_argument    -log-path=/tmp/chrome.log
@@ -35,13 +35,14 @@ TC_TEST_00035 test chrome headless by manual config
 
     ${chrome_options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
     Call Method    ${chrome_options}    add_argument    headless
+    #Call Method    ${chrome_options}    add_argument    window-size=1920,1080
     Call Method    ${chrome_options}    add_argument    disable-gpu
     Create Webdriver    Chrome    chrome_options=${chrome_options}
     Go To    http://www.google.com
     #Open Browser    ${url}    Chrome    desired_capabilities=${chrome_options.to_capabilities()}
 
     #Maximize Browser Window
-    #set window size    1920    1080
+    set window size    1920    1080
     Click element    btnK    
     capture page screenshot
     close browser
